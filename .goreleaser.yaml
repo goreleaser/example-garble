@@ -1,5 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/goreleaser/goreleaser/v1.15.2/www/docs/static/schema-pro.json
 # Make sure to check the documentation at https://goreleaser.com
+version: 2
+
 project_name: garble-testing
 before:
   hooks:
@@ -9,7 +11,7 @@ builds:
     env:
       - CGO_ENABLED=0
     binary: dataio-agent
-    gobinary: garble
+    tool: garble
 
     # command is a single string.
     # garble's 'build' needs the -literals and -tiny args before it, so we
@@ -25,7 +27,7 @@ builds:
       - arm64
     main: main.go
 archives:
-  - format: tar.gz
+  - formats: [tar.gz]
     # this name template makes the OS and Arch compatible with the results of uname.
     name_template: >-
       {{ .ProjectName }}_ß
@@ -37,7 +39,7 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
   filters:
